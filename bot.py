@@ -11,8 +11,14 @@ BASE_URL = f"https://tapi.bale.ai/bot{TOKEN}/"
 offset = 0  # برای دریافت پیام‌های جدید
 
 def save_to_csv(username, value):
+    file_exists = os.path.isfile("data.csv")
+    
     with open("data.csv", "a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
+        
+        if not file_exists:
+            writer.writerow(["username", "value", "date"])
+        
         writer.writerow([username, value, datetime.now().isoformat()])
 
 def get_updates():
